@@ -14,10 +14,8 @@ class AuthenticateRepositoryImpl implements AuthenticateRepository{
     try{
       final res = await reqresApiService.login(email, password);
 
-      print('login success');
       return Result.success(LoginResponse.fromJson(res.data));
     }catch(e){
-      print('login failure');
       return Result.failure(e.toString());
     }
   }

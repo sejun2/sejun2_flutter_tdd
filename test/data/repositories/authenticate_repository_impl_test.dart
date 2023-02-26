@@ -32,4 +32,26 @@ void main(){
 
     expect(result, const Result<LoginResponse, String>.success(LoginResponse(token: 'TESTTOKEN')));
   });
+
+
+  test('when login response not ok, then return Failure', () async{
+    const email = 'test@test.com';
+    const password = 'p@ssw0rd';
+
+    final mockReqresApiService = MockReqresApiService();
+
+    when(mockReqresApiService.login(email, password)).thenAnswer((_) async {
+      return Future.value(Response(
+          requestOptions: RequestOptions(),
+          data: {'error': 'error'},
+          statusCode: 403,
+          statusMessage: 'error', ));
+    });
+
+    final repository = AuthenticateRepositoryImpl(reqresApiService: mockReqresApiService);
+
+    final result = await repository.login(email, password);
+
+    expect(result, isA<Failure>());
+  });
 }
