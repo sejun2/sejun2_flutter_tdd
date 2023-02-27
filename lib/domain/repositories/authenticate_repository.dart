@@ -1,7 +1,7 @@
-import 'package:sejun2_flutter_tdd/domain/entities/login_response.dart';
+import 'package:sejun2_flutter_tdd/data/models/token.dart';
 
 import '../entities/result.dart';
 
 abstract class AuthenticateRepository {
-  Future<Result<LoginResponse, String>> login(String email, String password);
+  Future<Result<Token, String>> login(String email, String password);
 }

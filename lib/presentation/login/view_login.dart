@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sejun2_flutter_tdd/presentation/list/view_list.dart';
 import 'package:sejun2_flutter_tdd/presentation/login/bloc/login_bloc.dart';
 import 'package:sejun2_flutter_tdd/presentation/login/bloc/login_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -78,6 +79,8 @@ class _ViewLoginState extends State<ViewLogin> {
       listener: (BuildContext context, Object? state) {
         if ((state as LoginState).status == LoginStatus.success) {
           Fluttertoast.showToast(msg: 'Login Success');
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => const ViewList()));
         } else if (state.status == LoginStatus.failure) {
           Fluttertoast.showToast(msg: 'Login Failure');
         }
