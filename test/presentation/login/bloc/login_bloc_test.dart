@@ -11,7 +11,7 @@ import 'package:sejun2_flutter_tdd/domain/repositories/authenticate_repository.d
 import 'package:sejun2_flutter_tdd/presentation/login/bloc/login_bloc.dart';
 import 'package:sejun2_flutter_tdd/presentation/login/bloc/login_state.dart';
 
-import '../../../mocks/authenticate_repository_impl_test.mocks.dart';
+import '../../../mocks/mocks.mocks.dart';
 
 void main() {
   String email = 'email@email.com';
@@ -47,6 +47,32 @@ void main() {
     expect: () => <LoginState>[
       LoginState().copyWith(status: LoginStatus.loading),
       LoginState().copyWith(status: LoginStatus.success),
+    ],
+  );
+
+  blocTest<LoginBloc, LoginState>(
+    'when login fail, then emit LoginStatus.failure',
+    setUp: () {
+      mockReqresApiService = MockReqresApiService();
+
+      when(mockReqresApiService.login(email, password)).thenAnswer((_) async {
+        return Future.value(Response(
+            requestOptions: RequestOptions(), data: {}, statusCode: 403));
+      });
+
+      authenticateRepository =
+          AuthenticateRepositoryImpl(reqresApiService: mockReqresApiService);
+    },
+    build: () => LoginBloc(authenticateRepository: authenticateRepository),
+    act: (bloc) async {
+      await bloc.login(email, password);
+    },
+    verify: (_) {
+      verify(mockReqresApiService.login(email, password));
+    },
+    expect: () => <LoginState>[
+      LoginState().copyWith(status: LoginStatus.loading),
+      LoginState().copyWith(status: LoginStatus.failure),
     ],
   );
 }

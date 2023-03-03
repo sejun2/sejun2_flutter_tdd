@@ -10,10 +10,8 @@ import 'package:sejun2_flutter_tdd/data/entities/entity.dart';
 import 'package:sejun2_flutter_tdd/data/mapper/token_mapper.dart';
 import 'package:sejun2_flutter_tdd/data/repositories/authenticate_repository_impl.dart';
 import 'package:sejun2_flutter_tdd/domain/models/model.dart';
+import '../../mocks/mocks.mocks.dart';
 
-import '../../mocks/authenticate_repository_impl_test.mocks.dart';
-
-@GenerateNiceMocks([MockSpec<ReqresApiService>()])
 void main(){
   test('when login response ok, then return Result.success', () async{
     const email = 'test@test.com';
