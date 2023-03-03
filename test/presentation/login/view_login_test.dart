@@ -45,7 +45,7 @@ void main() {
 
       await tester.pumpWidget(targetView);
       // pumpAndSettle() is for waiting for the animation to complete.
-      // But because the CircularProgressIndicator is an animation that will not be visible until the animation has completed,
+      // But because the CircularProgressIndicator is an animation that will not be completed which means infinite loop,
       // below code should not be used.
       // await tester.pumpAndSettle(const Duration(seconds: 3));
 
