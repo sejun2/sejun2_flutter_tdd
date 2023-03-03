@@ -1,20 +1,19 @@
 import 'package:sejun2_flutter_tdd/data/api_provider/reqres_api_service.dart';
-import 'package:sejun2_flutter_tdd/data/models/token.dart';
-import 'package:sejun2_flutter_tdd/domain/entities/result.dart';
-import 'package:sejun2_flutter_tdd/domain/mapper/token_mapper.dart';
+import 'package:sejun2_flutter_tdd/data/entities/entity.dart';
+import 'package:sejun2_flutter_tdd/data/mapper/token_mapper.dart';
 import 'package:sejun2_flutter_tdd/domain/repositories/authenticate_repository.dart';
 
-import '../../domain/entities/login_response.dart';
+import '../../domain/models/model.dart';
 
 class AuthenticateRepositoryImpl implements AuthenticateRepository{
-  AuthenticateRepositoryImpl({required this.reqresApiService});
+  AuthenticateRepositoryImpl({required ReqresApiService reqresApiService}) : _reqresApiService = reqresApiService;
 
-  final ReqresApiService reqresApiService;
+  final ReqresApiService _reqresApiService;
 
   @override
   Future<Result<Token, String>> login(String email, String password) async {
     try{
-      final res = await reqresApiService.login(email, password);
+      final res = await _reqresApiService.login(email, password);
 
       final entity = LoginResponse.fromJson(res.data);
       final model = TokenMapper().asModel(entity);

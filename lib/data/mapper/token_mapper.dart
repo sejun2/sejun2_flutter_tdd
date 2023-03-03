@@ -1,6 +1,6 @@
-import 'package:sejun2_flutter_tdd/data/models/token.dart';
-import 'package:sejun2_flutter_tdd/domain/entities/login_response.dart';
-import 'package:sejun2_flutter_tdd/domain/mapper/mapper.dart';
+import '../../domain/models/token.dart';
+import '../entities/entity.dart';
+import 'mapper.dart';
 
 class TokenMapper implements Mapper<Token, LoginResponse>{
   @override

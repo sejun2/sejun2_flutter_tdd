@@ -14,6 +14,7 @@ class LoginBloc extends Cubit<LoginState> {
     result.when(success: (value) {
       emit(state.copyWith(
         status: LoginStatus.success,
+        token: value,
       ));
     }, failure: (error) {
       emit(state.copyWith(
