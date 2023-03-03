@@ -44,9 +44,9 @@ void main() {
       );
 
       await tester.pumpWidget(targetView);
-      //This essentially waits for all animations to have completed.
-      //Because the CircularProgressIndicator is an animation that will not be visible until the animation has completed,
-      //below code should not be used.
+      // pumpAndSettle() is for waiting for the animation to complete.
+      // But because the CircularProgressIndicator is an animation that will not be visible until the animation has completed,
+      // below code should not be used.
       // await tester.pumpAndSettle(const Duration(seconds: 3));
 
       expect(find.byType(TextFormField), findsNothing);
@@ -74,5 +74,7 @@ void main() {
         });
   });
 
-  group('action validation', () {});
+  group('action validation', () {
+
+  });
 }
