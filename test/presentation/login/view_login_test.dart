@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,11 +18,10 @@ void main() {
 
   setUp(() {
     when(authenticateRepository.login('email@email.com', 'password'))
-        .thenAnswer((_) => Future.value(const Result.success(Token(token: ''))));
+        .thenAnswer(
+            (_) => Future.value(const Result.success(Token(token: ''))));
   });
-  tearDown(() {
-
-  });
+  tearDown(() {});
 
   group('ui validation', () {
     testWidgets(
@@ -67,62 +68,70 @@ void main() {
 
     testWidgets(
         'when login status is success, then show email TextFormField, password TextFormBuild, submit button',
-            (tester) async {
-          final targetView = MaterialApp(
-            home: BlocProvider(
-              create: (context) =>
-                  LoginBloc(authenticateRepository: authenticateRepository, loginState: LoginState(status: LoginStatus.success)),
-              child: const ViewLogin(),
-            ),
-          );
+        (tester) async {
+      final targetView = MaterialApp(
+        home: BlocProvider(
+          create: (context) => LoginBloc(
+              authenticateRepository: authenticateRepository,
+              loginState: LoginState(status: LoginStatus.success)),
+          child: const ViewLogin(),
+        ),
+      );
 
-          await tester.pumpWidget(targetView);
-          await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpWidget(targetView);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
-          expect(find.byType(TextFormField), findsNWidgets(2));
-          expect(find.byType(ElevatedButton), findsOneWidget);
-          expect(find.byType(CircularProgressIndicator), findsNothing);
-        });
+      expect(find.byType(TextFormField), findsNWidgets(2));
+      expect(find.byType(ElevatedButton), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+    });
   });
 
   group('action validation', () {
-      testWidgets('Validation failed is given, when tap submit button, then login process is not working', (tester) async {
-        final targetView = MaterialApp(
-          home: BlocProvider(
-            create: (context) =>
-                LoginBloc(authenticateRepository: authenticateRepository),
-            child: const ViewLogin(),
-          ),
-        );
+    testWidgets(
+        'Validation failed is given, when tap submit button, then login process is not working',
+        (tester) async {
+      final targetView = MaterialApp(
+        home: BlocProvider(
+          create: (context) =>
+              LoginBloc(authenticateRepository: authenticateRepository),
+          child: const ViewLogin(),
+        ),
+      );
 
-        await tester.pumpWidget(targetView);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpWidget(targetView);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
-        await tester.tap(find.byType(ElevatedButton));
+      await tester.tap(find.byType(ElevatedButton));
 
-        verifyNever(authenticateRepository.login('', ''));
-      });
+      verifyNever(authenticateRepository.login('', ''));
+    });
 
-      testWidgets('Validation success is given, when tap submit button, then login process is working', (tester) async {
-        final targetView = MaterialApp(
-          home: BlocProvider(
-            create: (context) =>
-                LoginBloc(authenticateRepository: authenticateRepository),
-            child: const ViewLogin(),
-          ),
-        );
+    testWidgets(
+        'Validation success is given, when tap submit button, then login process is working',
+        (tester) async {
+      final targetView = MaterialApp(
+        home: BlocProvider(
+          create: (context) =>
+              LoginBloc(authenticateRepository: authenticateRepository),
+          child: const ViewLogin(),
+        ),
+      );
 
-        await tester.pumpWidget(targetView);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpWidget(targetView);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
-        await tester.tap(find.byType(ElevatedButton));
+      await tester.tap(find.byType(ElevatedButton));
 
-        await tester.enterText(find.byKey(const Key('email_text_form_field_key')), 'email@email.com');
-        await tester.enterText(find.byKey(const Key('password_text_form_field_key')), 'password');
+      await tester.enterText(find.byKey(const Key('email_text_form_field_key')),
+          'email@email.com');
+      await tester.enterText(
+          find.byKey(const Key('password_text_form_field_key')), 'password');
 
-        await tester.tap(find.byType(ElevatedButton));
+      await tester.tap(find.byType(ElevatedButton));
 
-        verify(authenticateRepository.login('email@email.com', 'password')).called(1);
-      });
+      verify(authenticateRepository.login('email@email.com', 'password'))
+          .called(1);
+    });
   });
 }

@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sejun2_flutter_tdd/data/api_provider/reqres_api_service.dart';
+import 'package:sejun2_flutter_tdd/data/di/di_provider.dart';
 import 'package:sejun2_flutter_tdd/data/repositories/authenticate_repository_impl.dart';
 import 'package:sejun2_flutter_tdd/domain/repositories/authenticate_repository.dart';
 import 'package:sejun2_flutter_tdd/presentation/login/bloc/login_bloc.dart';
@@ -20,10 +22,18 @@ void main() {
   late ReqresApiService mockReqresApiService;
   late AuthenticateRepository authenticateRepository;
 
+  setUpAll(() {
+    DiProvider.provide();
+  });
+
+  tearDownAll(() {
+    GetIt.instance.reset();
+  });
+
   blocTest<LoginBloc, LoginState>(
     'when login success, then emit LoginStatus.success',
     setUp: () {
-      mockReqresApiService = MockReqresApiService();
+      mockReqresApiService = GetIt.instance.get<ReqresApiService>();
 
       final file = File('test/json_files/login_success_result.json');
       final data = file.readAsStringSync();
@@ -53,7 +63,7 @@ void main() {
   blocTest<LoginBloc, LoginState>(
     'when login fail, then emit LoginStatus.failure',
     setUp: () {
-      mockReqresApiService = MockReqresApiService();
+      mockReqresApiService = GetIt.instance.get<ReqresApiService>();
 
       when(mockReqresApiService.login(email, password)).thenAnswer((_) async {
         return Future.value(Response(

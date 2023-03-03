@@ -8,10 +8,10 @@ class LoginState extends Equatable {
 
   Token? token;
 
-  LoginStatus? status;
+  LoginStatus status;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [status];
 
   LoginState copyWith({
     LoginStatus? status,
