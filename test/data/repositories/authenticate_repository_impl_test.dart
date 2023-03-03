@@ -1,15 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sejun2_flutter_tdd/data/api_provider/reqres_api_service.dart';
+import 'package:sejun2_flutter_tdd/data/entities/entity.dart';
+import 'package:sejun2_flutter_tdd/data/mapper/token_mapper.dart';
 import 'package:sejun2_flutter_tdd/data/repositories/authenticate_repository_impl.dart';
-import 'package:sejun2_flutter_tdd/domain/entities/login_response.dart';
-import 'package:sejun2_flutter_tdd/domain/entities/result.dart';
+import 'package:sejun2_flutter_tdd/domain/models/model.dart';
 
-import 'authenticate_repository_impl_test.mocks.dart';
+import '../../mocks/authenticate_repository_impl_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<ReqresApiService>()])
 void main(){
@@ -19,18 +21,21 @@ void main(){
 
     final mockReqresApiService = MockReqresApiService();
 
-    final resultData = json.decode('{"token": "TESTTOKEN"}');
+    //read jsonfile
+    final jsonFile = File('test/json_files/login_success_result.json');
+    final jsonString = jsonFile.readAsStringSync();
+    final responseData = jsonDecode(jsonString);
 
     when(mockReqresApiService.login(email, password)).thenAnswer((_) async {
       return Future.value(Response(
-          requestOptions: RequestOptions(), data: resultData, statusCode: 201));
+          requestOptions: RequestOptions(), data: responseData, statusCode: 201));
     });
 
     final repository = AuthenticateRepositoryImpl(reqresApiService: mockReqresApiService);
 
     final result = await repository.login(email, password);
 
-    expect(result, const Result<LoginResponse, String>.success(LoginResponse(token: 'TESTTOKEN')));
+    expect(result, Success<Token, String>(TokenMapper().asModel(const LoginResponse(token: 'TESTTOKEN'))));
   });
 
 
