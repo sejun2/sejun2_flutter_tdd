@@ -4,14 +4,14 @@ import 'package:sejun2_flutter_tdd/domain/models/token.dart';
 enum LoginStatus { initial, loading, success, failure }
 
 class LoginState extends Equatable {
-  LoginState();
+  LoginState({this.status = LoginStatus.initial, this.token});
 
   Token? token;
 
-  LoginStatus status = LoginStatus.initial;
+  LoginStatus? status;
 
   @override
-  List<Object> get props => [status];
+  List<Object> get props => [];
 
   LoginState copyWith({
     LoginStatus? status,

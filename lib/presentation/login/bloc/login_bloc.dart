@@ -3,7 +3,7 @@ import 'package:sejun2_flutter_tdd/domain/repositories/authenticate_repository.d
 import 'package:sejun2_flutter_tdd/presentation/login/bloc/login_state.dart';
 
 class LoginBloc extends Cubit<LoginState> {
-  LoginBloc({required this.authenticateRepository}) : super(LoginState());
+  LoginBloc({required this.authenticateRepository, LoginState? loginState}) : super(loginState ?? LoginState());
 
   final AuthenticateRepository authenticateRepository;
 
