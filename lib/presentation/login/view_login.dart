@@ -36,6 +36,7 @@ class _ViewLoginState extends State<ViewLogin> {
               child: Column(
                 children: [
                   TextFormField(
+                    key: const Key('email_text_form_field_key'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -48,6 +49,7 @@ class _ViewLoginState extends State<ViewLogin> {
                     controller: _emailController,
                   ),
                   TextFormField(
+                    key: const Key('password_text_form_field_key'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
