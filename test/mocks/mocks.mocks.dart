@@ -10,9 +10,12 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:sejun2_flutter_tdd/data/api_provider/reqres_api_service.dart'
     as _i4;
 import 'package:sejun2_flutter_tdd/data/entities/entity.dart' as _i3;
+import 'package:sejun2_flutter_tdd/domain/models/model.dart' as _i9;
 import 'package:sejun2_flutter_tdd/domain/models/token.dart' as _i7;
 import 'package:sejun2_flutter_tdd/domain/repositories/authenticate_repository.dart'
     as _i6;
+import 'package:sejun2_flutter_tdd/domain/repositories/list_repository.dart'
+    as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -156,4 +159,39 @@ class MockAuthenticateRepository extends _i1.Mock
           ),
         )),
       ) as _i5.Future<_i3.Result<_i7.Token, String>>);
+}
+
+/// A class which mocks [ListRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockListRepository extends _i1.Mock implements _i8.ListRepository {
+  @override
+  _i5.Future<_i3.Result<List<_i9.User>, String>> fetchUsers(
+          {required int? page}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchUsers,
+          [],
+          {#page: page},
+        ),
+        returnValue: _i5.Future<_i3.Result<List<_i9.User>, String>>.value(
+            _FakeResult_1<List<_i9.User>, String>(
+          this,
+          Invocation.method(
+            #fetchUsers,
+            [],
+            {#page: page},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i3.Result<List<_i9.User>, String>>.value(
+                _FakeResult_1<List<_i9.User>, String>(
+          this,
+          Invocation.method(
+            #fetchUsers,
+            [],
+            {#page: page},
+          ),
+        )),
+      ) as _i5.Future<_i3.Result<List<_i9.User>, String>>);
 }

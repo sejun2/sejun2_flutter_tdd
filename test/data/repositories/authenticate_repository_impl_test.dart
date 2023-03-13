@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sejun2_flutter_tdd/data/api_provider/reqres_api_service.dart';
 import 'package:sejun2_flutter_tdd/data/di/di_provider.dart';
@@ -13,7 +11,6 @@ import 'package:sejun2_flutter_tdd/data/entities/entity.dart';
 import 'package:sejun2_flutter_tdd/data/mapper/token_mapper.dart';
 import 'package:sejun2_flutter_tdd/data/repositories/authenticate_repository_impl.dart';
 import 'package:sejun2_flutter_tdd/domain/models/model.dart';
-import '../../mocks/mocks.mocks.dart';
 
 void main(){
 
