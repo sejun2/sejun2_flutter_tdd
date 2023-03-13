@@ -85,6 +85,33 @@ class MockReqresApiService extends _i1.Mock implements _i4.ReqresApiService {
           ),
         )),
       ) as _i5.Future<_i2.Response<dynamic>>);
+  @override
+  _i5.Future<_i2.Response<dynamic>> fetchUsers({required int? page}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchUsers,
+          [],
+          {#page: page},
+        ),
+        returnValue:
+            _i5.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #fetchUsers,
+            [],
+            {#page: page},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #fetchUsers,
+            [],
+            {#page: page},
+          ),
+        )),
+      ) as _i5.Future<_i2.Response<dynamic>>);
 }
 
 /// A class which mocks [AuthenticateRepository].

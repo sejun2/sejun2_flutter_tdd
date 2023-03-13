@@ -10,4 +10,8 @@ class ReqresApiService {
       'password': password,
     });
   }
+
+  Future<Response> fetchUsers({required int page}){
+    return _dio.get('/users', queryParameters: {'page': page});
+  }
 }
